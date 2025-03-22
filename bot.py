@@ -1,22 +1,20 @@
 import os
-import json
-from google.oauth2 import service_account
 from discord.ext import commands
 from googleapiclient.discovery import build
+from google.auth import compute_engine
 import discord
 
 from dotenv import load_dotenv
 load_dotenv()
 
-# Load credentials from env
-credentials = service_account.Credentials.from_service_account_file(os.environ["GCP_CREDENTIALS_JSON"])
+credentials = compute_engine.Credentials()
+compute = build('compute', 'v1', credentials=credentials)
 
 GCP_PROJECT = os.environ["GCP_PROJECT_ID"]
 GCP_ZONE = os.environ["GCP_ZONE"]
 GCP_INSTANCE = os.environ["GCP_INSTANCE"]
 DISCORD_TOKEN = os.environ["DSC_BOT_TOKEN"]
 
-compute = build("compute", "v1", credentials=credentials)
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
