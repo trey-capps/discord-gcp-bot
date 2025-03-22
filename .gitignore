@@ -1,0 +1,4 @@
+venv/
+.env
+gcp-tok.json
+test.txt
